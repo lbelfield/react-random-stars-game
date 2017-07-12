@@ -10,6 +10,8 @@ class Game extends Component {
 
     state = {
         selectedNumbers: [],
+        usedNumbers: [],
+
         // randomNumberOfStars needs to stay here, as everytime we change something, react re-renders Game.js which invokes all of its children.
         // so adding it here stops it from regenerating all the time
         // Math.random()*9 generates a random number between 0 and 9
@@ -17,13 +19,14 @@ class Game extends Component {
         randomNumberOfStars: 1 + Math.floor(Math.random()*9),
 
         // boolean to test if the sum of numbers === sum of stars
-        answerIsCorrect: null
+        answerIsCorrect: null,
     };
 
     // function that adds the clicked number to the state's selectedNumbers array
     selectNumberFunction = (clickedNumber) => {
         if(this.state.selectedNumbers.indexOf(clickedNumber) >=0) { return; }
         this.setState(prevState => ({
+            answerIsCorrect:null,
             selectedNumbers: prevState.selectedNumbers.concat(clickedNumber)
         }));
     }
@@ -31,6 +34,7 @@ class Game extends Component {
     // function that removes items from the state's selectedNumbers
     unselectNumberFunction = (clickedNumber) => {
         this.setState(prevState => ({
+            answerIsCorrect:null,
             selectedNumbers: prevState.selectedNumbers.filter(number => number !== clickedNumber)
         }));
     }
@@ -39,6 +43,16 @@ class Game extends Component {
     checkAnswer = () => {
         this.setState(prevState => ({
             answerIsCorrect: prevState.randomNumberOfStars === prevState.selectedNumbers.reduce((acc, n) => acc + n, 0)
+        }))
+    };
+
+    // this is used to reset the game once the answer has been accepted
+    acceptAnswer = () => {
+        this.setState(prevState => ({
+            usedNumbers: prevState.usedNumbers.concat(prevState.selectedNumbers),
+            selectedNumbers: [],
+            answerIsCorrect: null,
+            randomNumberOfStars: 1 + Math.floor(Math.random()*9)
         }))
     };
 
@@ -70,14 +84,16 @@ class Game extends Component {
 
                     <Button parentSelectedNumbersArray={this.state.selectedNumbers}
                             parentCheckAnswerFunction={this.checkAnswer}
-                            parentAnswerIsCorrectBln={this.state.answerIsCorrect}/>
+                            parentAnswerIsCorrectBln={this.state.answerIsCorrect}
+                            parentAcceptAnswerFunction={this.acceptAnswer}/>
 
                     <Answer parentSelectedNumbersArray={this.state.selectedNumbers}
                             parentUnselectedNumberFunction={this.unselectNumberFunction} />
                 </div>
                 <br />
                 <Numbers parentSelectedNumbersArray={this.state.selectedNumbers} 
-                         parentSelectNumberFunction={this.selectNumberFunction}/>
+                         parentSelectNumberFunction={this.selectNumberFunction}
+                         parentUsedNumbersArray={this.state.usedNumbers}/>
             </div>
         );
     }

@@ -11,6 +11,9 @@ const Numbers = (props) => {
     // if the value passed in is a value on the parentSelectedNumbersArray, return selected
     // Look at the css for Numbers.css. It says if className=selected, apply a different style
     const numberClassName = (numberValue) => {
+        if(props.parentUsedNumbersArray.indexOf(numberValue) >= 0) {
+            return 'used';
+        }
         if(props.parentSelectedNumbersArray.indexOf(numberValue) >= 0) {
             return 'selected';
         }
