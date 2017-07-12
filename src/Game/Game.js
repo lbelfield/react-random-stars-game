@@ -15,6 +15,9 @@ class Game extends Component {
         // Math.random()*9 generates a random number between 0 and 9
         // however, we don't want 0, so we add a 1 to this. We then have to wrap this in a Math.floor() 
         randomNumberOfStars: 1 + Math.floor(Math.random()*9),
+
+        // boolean to test if the sum of numbers === sum of stars
+        answerIsCorrect: null
     };
 
     // function that adds the clicked number to the state's selectedNumbers array
@@ -31,6 +34,13 @@ class Game extends Component {
             selectedNumbers: prevState.selectedNumbers.filter(number => number !== clickedNumber)
         }));
     }
+
+    // function that changes the answerIsCorrect to true or false, depending if the sum of the selected numbers === number of stars
+    checkAnswer = () => {
+        this.setState(prevState => ({
+            answerIsCorrect: prevState.randomNumberOfStars === prevState.selectedNumbers.reduce((acc, n) => acc + n, 0)
+        }))
+    };
 
     render() {
         return (
@@ -57,12 +67,17 @@ class Game extends Component {
                 <hr />
                 <div className="row">
                     <Stars parentNumberOfStarsArray={this.state.randomNumberOfStars}/>
-                    <Button parentSelectedNumbersArray={this.state.selectedNumbers}/>
+
+                    <Button parentSelectedNumbersArray={this.state.selectedNumbers}
+                            parentCheckAnswerFunction={this.checkAnswer}
+                            parentAnswerIsCorrectBln={this.state.answerIsCorrect}/>
+
                     <Answer parentSelectedNumbersArray={this.state.selectedNumbers}
                             parentUnselectedNumberFunction={this.unselectNumberFunction} />
                 </div>
                 <br />
-                <Numbers parentSelectedNumbersArray={this.state.selectedNumbers} parentSelectNumberFunction={this.selectNumberFunction}/>
+                <Numbers parentSelectedNumbersArray={this.state.selectedNumbers} 
+                         parentSelectNumberFunction={this.selectNumberFunction}/>
             </div>
         );
     }
