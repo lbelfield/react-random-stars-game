@@ -4,7 +4,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.4",
+    "browser-sync": "^2.18.12",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "lodash.range": "^3.2.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.6.1",

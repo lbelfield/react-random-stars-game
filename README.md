@@ -1,10 +1,14 @@
+// for bootstraps
 npm install --save react react-dom
 npm install --save react-bootstrap
-
 npm install bootstrap --save
 npm install font-awesome --save-dev
-
 npm install jquery --save
+
+// for lodash crap
+npm install browser-sync --save
+npm install lodash --save
+npm i --save lodash.range
 
 
 
