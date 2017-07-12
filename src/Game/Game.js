@@ -25,6 +25,13 @@ class Game extends Component {
         }));
     }
 
+    // function that removes items from the state's selectedNumbers
+    unselectNumberFunction = (clickedNumber) => {
+        this.setState(prevState => ({
+            selectedNumbers: prevState.selectedNumbers.filter(number => number !== clickedNumber)
+        }));
+    }
+
     render() {
         return (
 
@@ -36,16 +43,23 @@ class Game extends Component {
 
             // parentSelectNumberFunction for <Numbers>
             // We need to pass a reference to a function that changes the state of selectedNumbers[] in Numbers.js
-            // so we create a function above that does that
+            // so we create a selectNumberFunction function above that does that
             // then we pass the function to the Numbers.js by the name parentSelectNumberFunction
             // note parentSelectNumberFunction is a reference to this function that lives in this Game.js
+
+            // parentUnselectedNumberFunction for Answer
+            // We need to pass a reference to a function that changes the state of selectedNumbers[] in Answer.js
+            // so we create a unselectNumberFunction function above that does that
+            // then we pass the function to the Answer.js by the name parentUnselectedNumberFunction
+            // note parentUnselectedNumberFunction is a reference to this function that lives in this Game.js
             <div className="container">
                 <h3>Play Nine</h3>
                 <hr />
                 <div className="row">
                     <Stars parentNumberOfStarsArray={this.state.randomNumberOfStars}/>
                     <Button />
-                    <Answer parentSelectedNumbersArray={this.state.selectedNumbers} />
+                    <Answer parentSelectedNumbersArray={this.state.selectedNumbers}
+                            parentUnselectedNumberFunction={this.unselectNumberFunction} />
                 </div>
                 <br />
                 <Numbers parentSelectedNumbersArray={this.state.selectedNumbers} parentSelectNumberFunction={this.selectNumberFunction}/>
