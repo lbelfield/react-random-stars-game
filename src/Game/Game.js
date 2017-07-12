@@ -57,7 +57,7 @@ class Game extends Component {
                 <hr />
                 <div className="row">
                     <Stars parentNumberOfStarsArray={this.state.randomNumberOfStars}/>
-                    <Button />
+                    <Button parentSelectedNumbersArray={this.state.selectedNumbers}/>
                     <Answer parentSelectedNumbersArray={this.state.selectedNumbers}
                             parentUnselectedNumberFunction={this.unselectNumberFunction} />
                 </div>
