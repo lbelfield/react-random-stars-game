@@ -9,7 +9,12 @@ import Numbers from "./Numbers";
 class Game extends Component {
 
     state = {
-        selectedNumbers: []
+        selectedNumbers: [],
+        // randomNumberOfStars needs to stay here, as everytime we change something, react re-renders Game.js which invokes all of its children.
+        // so adding it here stops it from regenerating all the time
+        // Math.random()*9 generates a random number between 0 and 9
+        // however, we don't want 0, so we add a 1 to this. We then have to wrap this in a Math.floor() 
+        randomNumberOfStars: 1 + Math.floor(Math.random()*9),
     };
 
     // function that adds the clicked number to the state's selectedNumbers array
@@ -37,7 +42,7 @@ class Game extends Component {
                 <h3>Play Nine</h3>
                 <hr />
                 <div className="row">
-                    <Stars />
+                    <Stars parentNumberOfStarsArray={this.state.randomNumberOfStars}/>
                     <Button />
                     <Answer parentSelectedNumbersArray={this.state.selectedNumbers} />
                 </div>
